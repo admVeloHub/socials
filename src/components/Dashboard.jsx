@@ -1,7 +1,6 @@
 // VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
-import { DashboardOutlined } from '@mui/icons-material'
 import { getDashboardMetrics, getChartData, getRatingAverage } from '../services/api'
 
 const Dashboard = () => {
@@ -32,14 +31,35 @@ const Dashboard = () => {
         getRatingAverage()
       ])
 
-      if (metricsResult.status === 'fulfilled' && metricsResult.value?.success) {
-        setMetrics(metricsResult.value.data)
+      // Tratar métricas - tentar usar dados mesmo se success for false
+      if (metricsResult.status === 'fulfilled') {
+        if (metricsResult.value?.success && metricsResult.value?.data) {
+          setMetrics(metricsResult.value.data)
+        } else if (metricsResult.value?.data) {
+          // Tentar usar dados mesmo se success for false
+          setMetrics(metricsResult.value.data)
+        } else {
+          console.error('Erro ao carregar métricas:', metricsResult.value?.error)
+        }
+      } else {
+        console.error('Erro ao carregar métricas:', metricsResult.reason)
       }
 
-      if (chartResult.status === 'fulfilled' && chartResult.value?.success) {
-        setChartData(chartResult.value.data)
+      // Tratar gráficos - tentar usar dados mesmo se success for false
+      if (chartResult.status === 'fulfilled') {
+        if (chartResult.value?.success && chartResult.value?.data) {
+          setChartData(chartResult.value.data)
+        } else if (chartResult.value?.data) {
+          // Tentar usar dados mesmo se success for false
+          setChartData(chartResult.value.data)
+        } else {
+          console.error('Erro ao carregar gráficos:', chartResult.value?.error)
+        }
+      } else {
+        console.error('Erro ao carregar gráficos:', chartResult.reason)
       }
 
+      // Tratar rating (já está bem tratado)
       if (ratingResult.status === 'fulfilled' && ratingResult.value?.success && ratingResult.value?.data) {
         setRatingAverage(ratingResult.value.data)
       } else if (ratingResult.status === 'rejected') {
@@ -61,20 +81,20 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="velohub-container">
-        <p>Carregando dados...</p>
-      </div>
+      <>
+        <div className="filters-section">
+          <p>Carregando dados...</p>
+        </div>
+        <div className="velohub-container">
+          <p>Carregando dados...</p>
+        </div>
+      </>
     )
   }
 
   return (
-    <div className="velohub-container">
-      <h2 className="section-title">
-        <DashboardOutlined className="section-icon" />
-        Command Center Metrics
-      </h2>
-
-      {/* Filtros */}
+    <>
+      {/* Linha de Filtros - FORA do container */}
       <div className="filters-section">
         <div className="filter-group">
           <label>Rede Social</label>
@@ -110,7 +130,7 @@ const Dashboard = () => {
           </select>
         </div>
 
-        <div className="filter-group">
+        <div className="filter-group filter-group-date">
           <label>Data Inicial</label>
           <input
             type="date"
@@ -120,7 +140,7 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="filter-group">
+        <div className="filter-group filter-group-date">
           <label>Data Final</label>
           <input
             type="date"
@@ -131,7 +151,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Cards de Métricas */}
+      {/* Container Principal */}
+      <div className="velohub-container">
+        {/* Cards de Métricas */}
       {metrics && (
         <div className="metrics-cards">
           <div className="metric-card">
@@ -200,7 +222,8 @@ const Dashboard = () => {
           </div>
         </div>
       )}
-    </div>
+      </div>
+    </>
   )
 }
 

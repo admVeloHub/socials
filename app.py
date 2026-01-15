@@ -124,8 +124,6 @@ with tabs[0]:
 
 # --- ABA 2: DASHBOARD ---
 with tabs[1]:
-    st.header("📈 Command Center Metrics")
-    
     if not df_filtered.empty:
         # Cards de Métricas
         m1, m2, m3 = st.columns(3)

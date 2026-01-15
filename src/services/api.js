@@ -15,7 +15,18 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error('Erro na API:', error)
+    // Melhorar log de erros
+    const errorMessage = error.response?.data?.error || error.message || 'Erro desconhecido'
+    const errorStatus = error.response?.status
+    const errorUrl = error.config?.url
+    
+    console.error('Erro na API:', {
+      url: errorUrl,
+      status: errorStatus,
+      message: errorMessage,
+      data: error.response?.data
+    })
+    
     return Promise.reject(error)
   }
 )
@@ -106,6 +117,21 @@ export const getDashboardMetrics = async (filters = {}) => {
     const response = await api.get('/dashboard/metrics', { params })
     return response.data
   } catch (error) {
+    // Tratar erro 500 especificamente
+    if (error.response?.status === 500) {
+      console.error('Erro 500 no servidor ao buscar métricas:', error.response?.data)
+      // Se houver dados na resposta mesmo com erro, tentar usar
+      if (error.response?.data?.data) {
+        return {
+          success: true,
+          data: error.response.data.data
+        }
+      }
+      return { 
+        success: false, 
+        error: 'Erro interno do servidor ao buscar métricas. Tente novamente mais tarde.' 
+      }
+    }
     throw new Error(error.response?.data?.error || 'Erro ao obter métricas')
   }
 }
@@ -142,6 +168,21 @@ export const getChartData = async (filters = {}) => {
     const response = await api.get('/dashboard/charts', { params })
     return response.data
   } catch (error) {
+    // Tratar erro 500 especificamente
+    if (error.response?.status === 500) {
+      console.error('Erro 500 no servidor ao buscar dados de gráficos:', error.response?.data)
+      // Se houver dados na resposta mesmo com erro, tentar usar
+      if (error.response?.data?.data) {
+        return {
+          success: true,
+          data: error.response.data.data
+        }
+      }
+      return { 
+        success: false, 
+        error: 'Erro interno do servidor ao buscar dados de gráficos. Tente novamente mais tarde.' 
+      }
+    }
     throw new Error(error.response?.data?.error || 'Erro ao obter dados de gráficos')
   }
 }

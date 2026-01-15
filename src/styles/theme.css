@@ -344,22 +344,45 @@ textarea.velohub-input {
 
 /* === FILTROS === */
 .filters-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+  margin: 16px;
   margin-bottom: 20px;
-  padding: 20px;
+  padding: 12px;
   background: var(--cor-fundo);
-  border-radius: 8px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  flex-wrap: wrap;
+  transition: all 0.3s ease;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 0.6;
+  min-width: 100px;
+}
+
+.filter-group-date {
+  flex: 0.6;
+  min-width: 100px;
 }
 
 .filter-group label {
   color: var(--gray);
   font-family: 'Poppins', sans-serif;
   font-weight: 500;
-  font-size: 0.9rem;
-  margin-bottom: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
   display: block;
+}
+
+.filters-section .velohub-input {
+  padding: 8px 12px;
+  font-size: 0.9rem;
 }
 
 /* === FEED === */
@@ -565,6 +588,12 @@ textarea.velohub-input {
   border: 1px solid var(--borda-escura);
 }
 
+.dark .filters-section {
+  background: var(--cor-container-escuro);
+  box-shadow: 0 4px 20px var(--sombra-escura);
+  border: 1px solid var(--borda-escura);
+}
+
 .dark h1,
 .dark h2,
 .dark h3 {
@@ -593,6 +622,19 @@ textarea.velohub-input {
 
   .charts-section {
     grid-template-columns: 1fr;
+  }
+
+  .filters-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-group {
+    min-width: 100%;
+  }
+  
+  .filter-group-date {
+    min-width: 100%;
   }
 
   .tabs-container {
