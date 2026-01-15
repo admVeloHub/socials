@@ -1,5 +1,6 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState } from 'react'
+import { AssessmentOutlined, DownloadOutlined, RocketLaunchOutlined } from '@mui/icons-material'
 import { generateReport, getTabulations } from '../services/api'
 
 const Reports = () => {
@@ -66,7 +67,10 @@ const Reports = () => {
 
   return (
     <div className="velohub-container">
-      <h2>📝 Relatório Executivo de CX</h2>
+      <h2 className="section-title">
+        <AssessmentOutlined className="section-icon" />
+        Relatório Executivo de CX
+      </h2>
 
       {/* Filtros */}
       <div className="filters-section">
@@ -131,7 +135,8 @@ const Reports = () => {
           className="velohub-btn"
           disabled={loading}
         >
-          {loading ? 'Gerando relatório...' : '🚀 Gerar Relatório com IA'}
+          <RocketLaunchOutlined sx={{ fontSize: '1rem', mr: 1 }} />
+          {loading ? 'Gerando relatório...' : 'Gerar Relatório com IA'}
         </button>
 
         {report && (
@@ -139,7 +144,8 @@ const Reports = () => {
             onClick={handleDownload}
             className="velohub-btn secondary"
           >
-            📥 Baixar Relatório (Markdown)
+            <DownloadOutlined sx={{ fontSize: '1rem', mr: 1 }} />
+            Baixar Relatório (Markdown)
           </button>
         )}
       </div>

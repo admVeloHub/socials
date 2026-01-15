@@ -1,7 +1,7 @@
-// VERSION: v1.0.2 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
+// VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API SKYNET
+// URL base da API SKYNET - Backend Online
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://staging-skynet-278491073220.us-east1.run.app/api/sociais'
 
 const api = axios.create({
@@ -247,6 +247,11 @@ export const getRatingAverage = async () => {
     const response = await api.get('/rating/average')
     return response.data
   } catch (error) {
+    // Se o endpoint não existir (404), retorna null para não quebrar o Dashboard
+    if (error.response?.status === 404) {
+      console.warn('Endpoint /rating/average não encontrado. Retornando null.')
+      return { success: false, data: null }
+    }
     throw new Error(error.response?.data?.error || 'Erro ao obter média de rating')
   }
 }

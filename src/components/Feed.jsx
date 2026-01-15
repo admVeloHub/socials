@@ -1,5 +1,6 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState, useEffect } from 'react'
+import { ChatOutlined } from '@mui/icons-material'
 import { getFeed } from '../services/api'
 
 const Feed = () => {
@@ -66,7 +67,10 @@ const Feed = () => {
 
   return (
     <div className="velohub-container">
-      <h2>📱 Feed de Atendimento</h2>
+      <h2 className="section-title">
+        <ChatOutlined className="section-icon" />
+        Feed de Atendimento
+      </h2>
 
       {/* Filtros */}
       <div className="filters-section">

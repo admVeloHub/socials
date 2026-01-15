@@ -1,5 +1,6 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState } from 'react'
+import { AddCircleOutlined } from '@mui/icons-material'
 import { createTabulation, analyzeText } from '../services/api'
 
 const TabulationForm = () => {
@@ -107,7 +108,10 @@ const TabulationForm = () => {
 
   return (
     <div className="velohub-container">
-      <h2>Nova Tabulação</h2>
+      <h2 className="section-title">
+        <AddCircleOutlined className="section-icon" />
+        Nova Tabulação
+      </h2>
       
       {message && (
         <div className={`message ${message.includes('sucesso') ? 'success' : 'error'}`}>

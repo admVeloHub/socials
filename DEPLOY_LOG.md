@@ -25,6 +25,35 @@
 
 ---
 
+### GitHub Push - 2026-01-15 14:51:40
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.10
+
+**Arquivos Modificados/Adicionados:**
+- `package.json` - Adicionado script "start" para iniciar servidor na rede local, adicionadas dependências Material-UI (@mui/material, @mui/icons-material, @emotion/react, @emotion/styled)
+- `src/components/Dashboard.jsx` - Versão atualizada para v1.1.0, adicionado tratamento de erro com Promise.allSettled para não quebrar Dashboard quando endpoint de rating não existir, adicionado ícone Material-UI no título
+- `src/services/api.js` - Versão atualizada para v1.0.3, melhorado tratamento de erro 404 no endpoint getRatingAverage para retornar null em vez de lançar exceção
+- `src/App.jsx` - Possíveis melhorias visuais
+- `src/components/Feed.jsx` - Possíveis melhorias visuais
+- `src/components/Reports.jsx` - Possíveis melhorias visuais
+- `src/components/TabulationForm.jsx` - Possíveis melhorias visuais
+- `src/styles/theme.css` - Possíveis ajustes de estilo
+- `README.md` - Atualizações na documentação
+- `package-lock.json` - Atualizado automaticamente
+
+**Descrição:**
+- Adicionado script "start" no package.json para facilitar inicialização do servidor na rede local
+- Integração com Material-UI para ícones e componentes visuais
+- Melhorado tratamento de erros no Dashboard para não quebrar quando endpoint de rating retorna 404
+- Dashboard agora usa Promise.allSettled para carregar dados de forma independente
+- Endpoint de rating agora retorna null quando não encontrado (404) em vez de lançar exceção
+- Melhorias visuais com ícones Material-UI nos componentes
+
+---
+
 ### GitHub Push - 2026-01-14 20:00:00
 
 **Tipo:** Push para GitHub  

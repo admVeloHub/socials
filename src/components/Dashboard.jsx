@@ -1,6 +1,7 @@
-// VERSION: v1.0.2 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
+// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
+import { DashboardOutlined } from '@mui/icons-material'
 import { getDashboardMetrics, getChartData, getRatingAverage } from '../services/api'
 
 const Dashboard = () => {
@@ -25,22 +26,24 @@ const Dashboard = () => {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [metricsResult, chartResult, ratingResult] = await Promise.all([
+      const [metricsResult, chartResult, ratingResult] = await Promise.allSettled([
         getDashboardMetrics(filters),
         getChartData(filters),
         getRatingAverage()
       ])
 
-      if (metricsResult.success) {
-        setMetrics(metricsResult.data)
+      if (metricsResult.status === 'fulfilled' && metricsResult.value?.success) {
+        setMetrics(metricsResult.value.data)
       }
 
-      if (chartResult.success) {
-        setChartData(chartResult.data)
+      if (chartResult.status === 'fulfilled' && chartResult.value?.success) {
+        setChartData(chartResult.value.data)
       }
 
-      if (ratingResult.success) {
-        setRatingAverage(ratingResult.data)
+      if (ratingResult.status === 'fulfilled' && ratingResult.value?.success && ratingResult.value?.data) {
+        setRatingAverage(ratingResult.value.data)
+      } else if (ratingResult.status === 'rejected') {
+        console.warn('Endpoint de rating não disponível:', ratingResult.reason?.message)
       }
     } catch (error) {
       console.error('Erro ao carregar dados:', error)
@@ -66,7 +69,10 @@ const Dashboard = () => {
 
   return (
     <div className="velohub-container">
-      <h2>📈 Command Center Metrics</h2>
+      <h2 className="section-title">
+        <DashboardOutlined className="section-icon" />
+        Command Center Metrics
+      </h2>
 
       {/* Filtros */}
       <div className="filters-section">

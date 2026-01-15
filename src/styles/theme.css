@@ -1,4 +1,4 @@
-/* VERSION: v1.0.1 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team */
+/* VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team */
 /* Estilos seguindo LAYOUT_GUIDELINES.md do projeto VeloHub */
 
 :root {
@@ -51,52 +51,96 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* === HEADER === */
-.velohub-header {
-  background-color: var(--cor-header);
-  border-bottom: 1px solid var(--borda-escura);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  padding: 16px 24px;
-  transition: all 0.3s ease;
+/* === APP CONTAINER === */
+.app {
+  min-height: 100vh;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding: 24px;
+  background-color: var(--cor-fundo);
+}
+
+/* === SELETOR DE ABAS - PADRÃO CONSOLE === */
+.tabs-container {
+  position: relative;
+  width: 100%;
+  background-color: var(--cor-container);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  padding: 0;
+  min-height: 48px;
+  display: flex;
   align-items: center;
+  justify-content: center;
 }
 
-.velohub-header h1 {
-  color: var(--blue-dark);
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-}
-
-.nav-menu {
+.tabs-wrapper {
   display: flex;
-  gap: 8px;
+  align-items: center;
+  gap: 0;
+  position: relative;
 }
 
-.nav-menu button {
-  background: var(--cor-container);
-  border: 1px solid var(--blue-dark);
-  border-radius: 8px;
-  padding: 8px 16px;
+.tab-button {
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 12px 24px;
   font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
   font-weight: 500;
-  color: var(--gray);
+  color: rgba(0, 0, 0, 0.35);
   cursor: pointer;
   transition: all 0.3s ease;
+  text-transform: none;
+  min-height: 48px;
+  position: relative;
+  white-space: nowrap;
 }
 
-.nav-menu button:hover {
-  background: var(--blue-medium);
-  color: var(--white);
-  border-color: var(--blue-medium);
+.tab-button:hover {
+  color: var(--blue-light);
+  background-color: rgba(22, 148, 255, 0.05);
 }
 
-.nav-menu button.active {
-  background: var(--blue-medium);
-  color: var(--white);
-  border-color: var(--blue-medium);
+.tab-button.active {
+  color: var(--blue-light);
+  border-bottom-color: var(--blue-light);
+}
+
+.tab-button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--blue-light);
+}
+
+/* Tema Escuro - Seletor de Abas */
+.dark .tabs-container {
+  background-color: var(--cor-container-escuro);
+  border-bottom: 1px solid var(--divisoria-escura);
+  box-shadow: 0 2px 8px var(--sombra-escura);
+}
+
+.dark .tab-button {
+  color: var(--texto-secundario-escuro);
+}
+
+.dark .tab-button:hover {
+  color: var(--texto-destaque-escuro);
+  background-color: rgba(22, 148, 255, 0.1);
+}
+
+.dark .tab-button.active {
+  color: var(--texto-destaque-escuro);
+  border-bottom-color: var(--texto-destaque-escuro);
 }
 
 /* === CONTAINERS === */
@@ -115,6 +159,42 @@ body {
   font-weight: 600;
   font-size: 1.5rem;
   margin-bottom: 20px;
+}
+
+/* === TÍTULOS DE SEÇÃO COM ÍCONE - PADRÃO MATERIAL UI === */
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.section-icon {
+  font-size: 1.75rem !important;
+  color: var(--blue-medium);
+  transition: all 0.3s ease;
+}
+
+.section-title:hover .section-icon {
+  color: var(--blue-light);
+  transform: scale(1.1);
+}
+
+/* Tema Escuro - Títulos de Seção */
+.dark .section-title {
+  color: var(--texto-principal-escuro);
+}
+
+.dark .section-icon {
+  color: var(--texto-destaque-escuro);
+}
+
+.dark .section-title:hover .section-icon {
+  color: var(--blue-light);
 }
 
 /* === CARDS === */
@@ -472,11 +552,6 @@ textarea.velohub-input {
   color: var(--texto-principal-escuro);
 }
 
-.dark .velohub-header {
-  background-color: var(--cor-header-escuro);
-  border-bottom: 1px solid var(--divisoria-escura);
-  box-shadow: 0 4px 20px var(--sombra-header-escura);
-}
 
 .dark .velohub-container,
 .dark .velohub-card {
@@ -502,6 +577,10 @@ textarea.velohub-input {
   color: var(--texto-secundario-escuro);
 }
 
+.dark .main-content {
+  background-color: var(--cor-fundo-escuro);
+}
+
 /* === RESPONSIVIDADE === */
 @media (max-width: 768px) {
   .form-row {
@@ -516,12 +595,13 @@ textarea.velohub-input {
     grid-template-columns: 1fr;
   }
 
-  .velohub-header {
-    flex-direction: column;
-    gap: 16px;
+  .tabs-container {
+    padding: 0 8px;
   }
 
-  .nav-menu {
-    flex-wrap: wrap;
+  .tab-button {
+    padding: 10px 16px;
+    font-size: 0.9rem;
+    min-height: 44px;
   }
 }

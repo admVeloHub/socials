@@ -4,16 +4,21 @@
   "description": "Sistema de Tabulação e Relatórios de Redes Sociais - VeloHub",
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.7",
+    "@mui/material": "^7.3.7",
+    "axios": "^1.6.0",
+    "plotly.js": "^2.27.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-plotly.js": "^2.6.0",
-    "plotly.js": "^2.27.0",
-    "axios": "^1.6.0"
+    "react-plotly.js": "^2.6.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.0",

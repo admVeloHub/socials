@@ -1,4 +1,4 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
 import { useState } from 'react'
 import TabulationForm from './components/TabulationForm'
 import Dashboard from './components/Dashboard'
@@ -9,37 +9,30 @@ import './styles/theme.css'
 function App() {
   const [activeTab, setActiveTab] = useState('tabulation')
 
+  const tabs = [
+    { id: 'tabulation', label: 'Entrada de Dados' },
+    { id: 'dashboard', label: 'Dashboard' },
+    { id: 'feed', label: 'Feed de Atendimento' },
+    { id: 'reports', label: 'Relatórios' }
+  ]
+
   return (
     <div className="app">
-      <header className="velohub-header">
-        <h1>Social Command Center</h1>
-        <nav className="nav-menu">
-          <button 
-            className={activeTab === 'tabulation' ? 'active' : ''}
-            onClick={() => setActiveTab('tabulation')}
-          >
-            📥 Entrada de Dados
-          </button>
-          <button 
-            className={activeTab === 'dashboard' ? 'active' : ''}
-            onClick={() => setActiveTab('dashboard')}
-          >
-            📊 Dashboard
-          </button>
-          <button 
-            className={activeTab === 'feed' ? 'active' : ''}
-            onClick={() => setActiveTab('feed')}
-          >
-            📱 Feed de Atendimento
-          </button>
-          <button 
-            className={activeTab === 'reports' ? 'active' : ''}
-            onClick={() => setActiveTab('reports')}
-          >
-            📝 Relatórios
-          </button>
-        </nav>
-      </header>
+      {/* Seletor de Abas - Padrão Console */}
+      <div className="tabs-container">
+        <div className="tabs-wrapper">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`tab-button ${activeTab === tab.id ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.id)}
+              aria-selected={activeTab === tab.id}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <main className="main-content">
         {activeTab === 'tabulation' && <TabulationForm />}
