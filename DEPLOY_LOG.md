@@ -25,6 +25,26 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:35:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.6
+
+**Arquivos Modificados/Adicionados:**
+- `vercel.json` - Alterado buildCommand de `npx vite build` para `npm run build`
+- `package.json` - Atualizado script de build para usar caminho direto do vite: `node node_modules/vite/bin/vite.js build`
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Correção do problema de versão conflitante do vite no deploy
+- `npx vite build` estava instalando vite@7.3.1 ao invés de usar vite@5.0.0 instalado
+- Script de build agora usa caminho direto para o vite nos node_modules
+- Garante uso da versão correta do vite especificada no package.json
+
+---
+
 ### GitHub Push - 2026-01-14 18:30:00
 
 **Tipo:** Push para GitHub  
