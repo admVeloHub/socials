@@ -25,6 +25,26 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:40:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.7
+
+**Arquivos Modificados/Adicionados:**
+- `package.json` - Script de build atualizado para usar caminho explícito: `node ./node_modules/vite/bin/vite.js build`
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+- Build testado localmente com sucesso
+
+**Descrição:**
+- Verificação completa realizada: build funciona localmente após `npm install`
+- Script de build atualizado para usar caminho explícito do vite
+- Garante funcionamento no Vercel mesmo se PATH não estiver configurado corretamente
+- Solução testada e validada localmente antes do push
+
+---
+
 ### GitHub Push - 2026-01-14 18:35:00
 
 **Tipo:** Push para GitHub  
