@@ -4,6 +4,27 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:15:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.2
+
+**Arquivos Modificados/Adicionados:**
+- `vercel.json` - Criado arquivo de configuração do Vercel
+- `package.json` - Criado package.json na raiz para facilitar deploy no Vercel
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Configuração do Vercel para build e deploy do projeto React/Vite
+- Build configurado para executar na pasta `frontend/`
+- Output directory configurado para `frontend/dist`
+- Rewrites configurados para SPA (Single Page Application)
+- Framework detectado como Vite
+
+---
+
 ### GitHub Push - 2026-01-14 18:10:00
 
 **Tipo:** Push para GitHub  
