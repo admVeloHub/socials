@@ -1,8 +1,8 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.0.1 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API SKYNET (ajustar conforme necessário)
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api/sociais'
+// URL base da API SKYNET
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://staging-skynet-278491073220.us-east1.run.app/api/sociais'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
