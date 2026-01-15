@@ -7,8 +7,8 @@ const Reports = () => {
   const [report, setReport] = useState('')
   const [loading, setLoading] = useState(false)
   const [filters, setFilters] = useState({
-    socialNetwork: [],
-    contactReason: [],
+    socialNetwork: '',
+    contactReason: '',
     dateFrom: '',
     dateTo: ''
   })
@@ -77,14 +77,11 @@ const Reports = () => {
         <div className="filter-group">
           <label>Rede Social</label>
           <select
-            multiple
             value={filters.socialNetwork}
-            onChange={(e) => {
-              const values = Array.from(e.target.selectedOptions, option => option.value)
-              handleFilterChange('socialNetwork', values)
-            }}
+            onChange={(e) => handleFilterChange('socialNetwork', e.target.value)}
             className="velohub-input"
           >
+            <option value="">Todas</option>
             {socialNetworks.map(network => (
               <option key={network} value={network}>{network}</option>
             ))}
@@ -94,14 +91,11 @@ const Reports = () => {
         <div className="filter-group">
           <label>Motivo</label>
           <select
-            multiple
             value={filters.contactReason}
-            onChange={(e) => {
-              const values = Array.from(e.target.selectedOptions, option => option.value)
-              handleFilterChange('contactReason', values)
-            }}
+            onChange={(e) => handleFilterChange('contactReason', e.target.value)}
             className="velohub-input"
           >
+            <option value="">Todos</option>
             {reasons.map(reason => (
               <option key={reason} value={reason}>{reason}</option>
             ))}

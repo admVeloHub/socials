@@ -8,8 +8,8 @@ const Dashboard = () => {
   const [chartData, setChartData] = useState(null)
   const [ratingAverage, setRatingAverage] = useState(null)
   const [filters, setFilters] = useState({
-    socialNetwork: [],
-    contactReason: [],
+    socialNetwork: '',
+    contactReason: '',
     dateFrom: '',
     dateTo: ''
   })
@@ -28,7 +28,7 @@ const Dashboard = () => {
       const [metricsResult, chartResult, ratingResult] = await Promise.allSettled([
         getDashboardMetrics(filters),
         getChartData(filters),
-        getRatingAverage()
+        getRatingAverage(filters)
       ])
 
       // Tratar métricas - tentar usar dados mesmo se success for false
@@ -99,14 +99,11 @@ const Dashboard = () => {
         <div className="filter-group">
           <label>Rede Social</label>
           <select
-            multiple
             value={filters.socialNetwork}
-            onChange={(e) => {
-              const values = Array.from(e.target.selectedOptions, option => option.value)
-              handleFilterChange('socialNetwork', values)
-            }}
+            onChange={(e) => handleFilterChange('socialNetwork', e.target.value)}
             className="velohub-input"
           >
+            <option value="">Todas</option>
             {socialNetworks.map(network => (
               <option key={network} value={network}>{network}</option>
             ))}
@@ -116,14 +113,11 @@ const Dashboard = () => {
         <div className="filter-group">
           <label>Motivo</label>
           <select
-            multiple
             value={filters.contactReason}
-            onChange={(e) => {
-              const values = Array.from(e.target.selectedOptions, option => option.value)
-              handleFilterChange('contactReason', values)
-            }}
+            onChange={(e) => handleFilterChange('contactReason', e.target.value)}
             className="velohub-input"
           >
+            <option value="">Todos</option>
             {reasons.map(reason => (
               <option key={reason} value={reason}>{reason}</option>
             ))}
@@ -164,11 +158,7 @@ const Dashboard = () => {
             <h3>% Sentimento Positivo</h3>
             <p className="metric-value">{metrics.positivePercent}%</p>
           </div>
-          <div className="metric-card">
-            <h3>Rede mais Ativa</h3>
-            <p className="metric-value">{metrics.mostActiveNetwork || 'N/A'}</p>
-          </div>
-          {ratingAverage && (
+          {ratingAverage ? (
             <div className="metric-card">
               <h3>Média</h3>
               <p className="metric-value">
@@ -176,7 +166,16 @@ const Dashboard = () => {
                 {ratingAverage.average && <span className="metric-unit">⭐</span>}
               </p>
             </div>
+          ) : (
+            <div className="metric-card">
+              <h3>Média</h3>
+              <p className="metric-value">N/A</p>
+            </div>
           )}
+          <div className="metric-card">
+            <h3>Rede mais Ativa</h3>
+            <p className="metric-value">{metrics.mostActiveNetwork || 'N/A'}</p>
+          </div>
         </div>
       )}
 

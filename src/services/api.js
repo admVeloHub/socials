@@ -46,28 +46,16 @@ export const getTabulations = async (filters = {}) => {
   try {
     const params = new URLSearchParams()
     
-    if (filters.socialNetwork) {
-      if (Array.isArray(filters.socialNetwork)) {
-        filters.socialNetwork.forEach(network => params.append('socialNetwork', network))
-      } else {
-        params.append('socialNetwork', filters.socialNetwork)
-      }
+    if (filters.socialNetwork && filters.socialNetwork !== '') {
+      params.append('socialNetwork', filters.socialNetwork)
     }
     
-    if (filters.contactReason) {
-      if (Array.isArray(filters.contactReason)) {
-        filters.contactReason.forEach(reason => params.append('contactReason', reason))
-      } else {
-        params.append('contactReason', filters.contactReason)
-      }
+    if (filters.contactReason && filters.contactReason !== '') {
+      params.append('contactReason', filters.contactReason)
     }
     
-    if (filters.sentiment) {
-      if (Array.isArray(filters.sentiment)) {
-        filters.sentiment.forEach(sent => params.append('sentiment', sent))
-      } else {
-        params.append('sentiment', filters.sentiment)
-      }
+    if (filters.sentiment && filters.sentiment !== '') {
+      params.append('sentiment', filters.sentiment)
     }
     
     if (filters.dateFrom) {
@@ -90,20 +78,12 @@ export const getDashboardMetrics = async (filters = {}) => {
   try {
     const params = new URLSearchParams()
     
-    if (filters.socialNetwork) {
-      if (Array.isArray(filters.socialNetwork)) {
-        filters.socialNetwork.forEach(network => params.append('socialNetwork', network))
-      } else {
-        params.append('socialNetwork', filters.socialNetwork)
-      }
+    if (filters.socialNetwork && filters.socialNetwork !== '') {
+      params.append('socialNetwork', filters.socialNetwork)
     }
     
-    if (filters.contactReason) {
-      if (Array.isArray(filters.contactReason)) {
-        filters.contactReason.forEach(reason => params.append('contactReason', reason))
-      } else {
-        params.append('contactReason', filters.contactReason)
-      }
+    if (filters.contactReason && filters.contactReason !== '') {
+      params.append('contactReason', filters.contactReason)
     }
     
     if (filters.dateFrom) {
@@ -141,20 +121,12 @@ export const getChartData = async (filters = {}) => {
   try {
     const params = new URLSearchParams()
     
-    if (filters.socialNetwork) {
-      if (Array.isArray(filters.socialNetwork)) {
-        filters.socialNetwork.forEach(network => params.append('socialNetwork', network))
-      } else {
-        params.append('socialNetwork', filters.socialNetwork)
-      }
+    if (filters.socialNetwork && filters.socialNetwork !== '') {
+      params.append('socialNetwork', filters.socialNetwork)
     }
     
-    if (filters.contactReason) {
-      if (Array.isArray(filters.contactReason)) {
-        filters.contactReason.forEach(reason => params.append('contactReason', reason))
-      } else {
-        params.append('contactReason', filters.contactReason)
-      }
+    if (filters.contactReason && filters.contactReason !== '') {
+      params.append('contactReason', filters.contactReason)
     }
     
     if (filters.dateFrom) {
@@ -192,28 +164,16 @@ export const getFeed = async (filters = {}) => {
   try {
     const params = new URLSearchParams()
     
-    if (filters.socialNetwork) {
-      if (Array.isArray(filters.socialNetwork)) {
-        filters.socialNetwork.forEach(network => params.append('socialNetwork', network))
-      } else {
-        params.append('socialNetwork', filters.socialNetwork)
-      }
+    if (filters.socialNetwork && filters.socialNetwork !== '') {
+      params.append('socialNetwork', filters.socialNetwork)
     }
     
-    if (filters.contactReason) {
-      if (Array.isArray(filters.contactReason)) {
-        filters.contactReason.forEach(reason => params.append('contactReason', reason))
-      } else {
-        params.append('contactReason', filters.contactReason)
-      }
+    if (filters.contactReason && filters.contactReason !== '') {
+      params.append('contactReason', filters.contactReason)
     }
     
-    if (filters.sentiment) {
-      if (Array.isArray(filters.sentiment)) {
-        filters.sentiment.forEach(sent => params.append('sentiment', sent))
-      } else {
-        params.append('sentiment', filters.sentiment)
-      }
+    if (filters.sentiment && filters.sentiment !== '') {
+      params.append('sentiment', filters.sentiment)
     }
     
     if (filters.dateFrom) {
@@ -283,9 +243,23 @@ export const deleteTabulation = async (id) => {
 }
 
 // Obter média de rating
-export const getRatingAverage = async () => {
+export const getRatingAverage = async (filters = {}) => {
   try {
-    const response = await api.get('/rating/average')
+    const params = new URLSearchParams()
+    
+    if (filters.socialNetwork && filters.socialNetwork !== '') {
+      params.append('socialNetwork', filters.socialNetwork)
+    }
+    
+    if (filters.dateFrom) {
+      params.append('dateFrom', filters.dateFrom)
+    }
+    
+    if (filters.dateTo) {
+      params.append('dateTo', filters.dateTo)
+    }
+    
+    const response = await api.get('/rating/average', { params })
     return response.data
   } catch (error) {
     // Se o endpoint não existir (404), retorna null para não quebrar o Dashboard
