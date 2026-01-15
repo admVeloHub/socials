@@ -25,6 +25,27 @@
 
 ---
 
+### GitHub Push - 2026-01-14 19:00:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.8
+
+**Arquivos Modificados/Adicionados:**
+- `vercel.json` - Simplificado para usar detecção automática do Vercel (removidos buildCommand e installCommand customizados)
+- `package.json` - Script de build voltou para `vite build` (padrão que funciona quando npm adiciona node_modules/.bin ao PATH)
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Simplificação da configuração do Vercel para usar detecção automática do framework Vite
+- Removidos comandos customizados que estavam causando problemas
+- Vercel detecta automaticamente projetos Vite e executa `npm install` e `npm run build` corretamente
+- Script de build usa `vite build` padrão que funciona quando executado via `npm run build` (npm adiciona node_modules/.bin ao PATH)
+- Solução mais simples e confiável baseada nas melhores práticas do Vercel
+
+---
+
 ### GitHub Push - 2026-01-14 18:40:00
 
 **Tipo:** Push para GitHub  
