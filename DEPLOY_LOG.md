@@ -25,6 +25,26 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:30:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.5
+
+**Arquivos Modificados/Adicionados:**
+- `vercel.json` - Atualizado buildCommand para usar `npx vite build`
+- `package.json` - Atualizado script de build para usar `npx vite build`
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Correção do problema "vite: command not found" no deploy do Vercel
+- BuildCommand atualizado para usar `npx vite build` ao invés de `npm run build`
+- Uso de `npx` garante que o vite seja encontrado mesmo se não estiver no PATH
+- Script de build no package.json também atualizado para consistência
+
+---
+
 ### GitHub Push - 2026-01-14 18:25:00
 
 **Tipo:** Push para GitHub  
