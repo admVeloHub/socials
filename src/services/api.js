@@ -1,4 +1,4 @@
-// VERSION: v1.0.1 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
+// VERSION: v1.0.2 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
 // URL base da API SKYNET
@@ -238,6 +238,16 @@ export const deleteTabulation = async (id) => {
     return response.data
   } catch (error) {
     throw new Error(error.response?.data?.error || 'Erro ao deletar tabulação')
+  }
+}
+
+// Obter média de rating
+export const getRatingAverage = async () => {
+  try {
+    const response = await api.get('/rating/average')
+    return response.data
+  } catch (error) {
+    throw new Error(error.response?.data?.error || 'Erro ao obter média de rating')
   }
 }
 

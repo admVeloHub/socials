@@ -1,4 +1,4 @@
-/* VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team */
+/* VERSION: v1.0.1 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team */
 /* Estilos seguindo LAYOUT_GUIDELINES.md do projeto VeloHub */
 
 :root {
@@ -254,6 +254,12 @@ textarea.velohub-input {
   font-family: 'Poppins', sans-serif;
   font-weight: 700;
   font-size: 2rem;
+}
+
+.metric-unit {
+  font-size: 1.5rem;
+  margin-left: 4px;
+  color: var(--yellow);
 }
 
 /* === FILTROS === */

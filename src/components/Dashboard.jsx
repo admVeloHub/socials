@@ -1,11 +1,12 @@
-// VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+// VERSION: v1.0.2 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import { useState, useEffect } from 'react'
 import Plot from 'react-plotly.js'
-import { getDashboardMetrics, getChartData } from '../services/api'
+import { getDashboardMetrics, getChartData, getRatingAverage } from '../services/api'
 
 const Dashboard = () => {
   const [metrics, setMetrics] = useState(null)
   const [chartData, setChartData] = useState(null)
+  const [ratingAverage, setRatingAverage] = useState(null)
   const [filters, setFilters] = useState({
     socialNetwork: [],
     contactReason: [],
@@ -24,9 +25,10 @@ const Dashboard = () => {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [metricsResult, chartResult] = await Promise.all([
+      const [metricsResult, chartResult, ratingResult] = await Promise.all([
         getDashboardMetrics(filters),
-        getChartData(filters)
+        getChartData(filters),
+        getRatingAverage()
       ])
 
       if (metricsResult.success) {
@@ -35,6 +37,10 @@ const Dashboard = () => {
 
       if (chartResult.success) {
         setChartData(chartResult.data)
+      }
+
+      if (ratingResult.success) {
+        setRatingAverage(ratingResult.data)
       }
     } catch (error) {
       console.error('Erro ao carregar dados:', error)
@@ -134,6 +140,15 @@ const Dashboard = () => {
             <h3>Rede mais Ativa</h3>
             <p className="metric-value">{metrics.mostActiveNetwork || 'N/A'}</p>
           </div>
+          {ratingAverage && (
+            <div className="metric-card">
+              <h3>Média</h3>
+              <p className="metric-value">
+                {ratingAverage.average ? ratingAverage.average.toFixed(2) : 'N/A'}
+                {ratingAverage.average && <span className="metric-unit">⭐</span>}
+              </p>
+            </div>
+          )}
         </div>
       )}
 

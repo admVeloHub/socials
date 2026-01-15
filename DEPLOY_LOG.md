@@ -25,6 +25,29 @@
 
 ---
 
+### GitHub Push - 2026-01-14 20:00:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.9
+
+**Arquivos Modificados/Adicionados:**
+- `src/components/Dashboard.jsx` - Adicionado quadro "Média" consultando GET /api/sociais/rating/average (v1.0.2)
+- `src/services/api.js` - Adicionada função getRatingAverage() para consultar média de rating (v1.0.2)
+- `src/styles/theme.css` - Adicionado estilo .metric-unit para ícone de estrela (v1.0.1)
+- `package-lock.json` - Atualizado automaticamente
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Novo quadro "Média" adicionado na aba Dashboard
+- Consulta automática ao endpoint GET /api/sociais/rating/average ao carregar o Dashboard
+- Exibe média de rating formatada com 2 casas decimais e ícone de estrela (⭐)
+- Integrado com os outros cards de métricas existentes
+- Versões dos arquivos atualizadas conforme padrão do projeto
+
+---
+
 ### GitHub Push - 2026-01-14 19:00:00
 
 **Tipo:** Push para GitHub  
