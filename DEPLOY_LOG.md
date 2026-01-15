@@ -25,6 +25,26 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:20:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.3
+
+**Arquivos Modificados/Adicionados:**
+- `vercel.json` - Ajustado installCommand e buildCommand para executar diretamente na pasta frontend
+- `package.json` - Removido `npm ci` do script de build (dependências já instaladas pelo installCommand)
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Correção da configuração do Vercel para build funcionar corretamente
+- installCommand agora executa `cd frontend && npm install` diretamente
+- buildCommand agora executa `cd frontend && npm run build` sem npm ci redundante
+- Resolve erro "vite: command not found" no deploy
+
+---
+
 ### GitHub Push - 2026-01-14 18:10:00
 
 **Tipo:** Push para GitHub  
