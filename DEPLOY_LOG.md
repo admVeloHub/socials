@@ -25,6 +25,30 @@
 
 ---
 
+### GitHub Push - 2026-01-14 18:25:00
+
+**Tipo:** Push para GitHub  
+**Repositório:** https://github.com/admVeloHub/socials  
+**Branch:** main  
+**Versão:** v1.0.4
+
+**Arquivos Modificados/Adicionados:**
+- Reestruturação completa: conteúdo da pasta `frontend/` movido para a raiz do projeto
+- `package.json` - Atualizado para refletir nova estrutura (versão 1.0.1)
+- `vercel.json` - Simplificado para executar comandos na raiz (sem `cd frontend`)
+- `index.html`, `vite.config.js`, `src/` - Movidos para raiz
+- Pasta `frontend/` removida
+- `DEPLOY_LOG.md` - Atualizado log de deploy
+
+**Descrição:**
+- Reestruturação do projeto para facilitar deploy no Vercel
+- Todos os arquivos do frontend agora estão na raiz do projeto
+- Configuração do Vercel simplificada: `npm install` e `npm run build` executam diretamente na raiz
+- Output directory atualizado para `dist` (ao invés de `frontend/dist`)
+- Resolve problema de "vite: command not found" no deploy
+
+---
+
 ### GitHub Push - 2026-01-14 18:20:00
 
 **Tipo:** Push para GitHub  

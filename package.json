@@ -1,12 +1,23 @@
 {
   "name": "veloredes",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Sistema de Tabulação e Relatórios de Redes Sociais - VeloHub",
-  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "cd frontend && npm run build",
-    "dev": "cd frontend && npm run dev",
-    "install": "cd frontend && npm install"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-plotly.js": "^2.6.0",
+    "plotly.js": "^2.27.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^5.0.0"
   },
   "engines": {
     "node": ">=18.0.0"
