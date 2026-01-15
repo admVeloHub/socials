@@ -1,0 +1,521 @@
+/* VERSION: v1.0.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team */
+/* Estilos seguindo LAYOUT_GUIDELINES.md do projeto VeloHub */
+
+:root {
+  /* === PALETA OFICIAL VELOHUB === */
+  --white: #F3F7FC;
+  --gray: #272A30;
+  --blue-dark: #000058;
+  --blue-medium: #1634FF;
+  --blue-light: #1694FF;
+  --blue-opaque: #006AB9;
+  --yellow: #FCC200;
+  --green: #15A237;
+
+  /* === CORES DE FUNDO E CONTAINERS === */
+  --cor-fundo: #f0f4f8;
+  --cor-container: #F3F7FC;
+  --cor-card: #F3F7FC;
+  --cor-header: #F3F7FC;
+
+  /* === CORES DO TEMA ESCURO === */
+  --cor-fundo-escuro: #272A30;
+  --cor-container-escuro: #323a42;
+  --cor-card-escuro: #323a42;
+  --cor-header-escuro: #006AB9;
+
+  /* === TEXTOS NO TEMA ESCURO === */
+  --texto-principal-escuro: #F3F7FC;
+  --texto-secundario-escuro: #B0BEC5;
+  --texto-destaque-escuro: #1694FF;
+
+  /* === BORDAS E SOMBRAS === */
+  --borda-escura: rgba(255, 255, 255, 0.1);
+  --divisoria-escura: rgba(255, 255, 255, 0.2);
+  --sombra-escura: rgba(0, 0, 0, 0.3);
+  --sombra-header-escura: rgba(0, 102, 171, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--gray);
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* === HEADER === */
+.velohub-header {
+  background-color: var(--cor-header);
+  border-bottom: 1px solid var(--borda-escura);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px 24px;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.velohub-header h1 {
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-menu button {
+  background: var(--cor-container);
+  border: 1px solid var(--blue-dark);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-menu button:hover {
+  background: var(--blue-medium);
+  color: var(--white);
+  border-color: var(--blue-medium);
+}
+
+.nav-menu button.active {
+  background: var(--blue-medium);
+  color: var(--white);
+  border-color: var(--blue-medium);
+}
+
+/* === CONTAINERS === */
+.velohub-container {
+  background-color: var(--cor-container);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  margin: 16px;
+  transition: all 0.3s ease;
+}
+
+.velohub-container h2 {
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+/* === CARDS === */
+.velohub-card {
+  background-color: var(--cor-card);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: 16px 0;
+  border: 1px solid rgba(22, 52, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.velohub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border-color: var(--blue-light);
+}
+
+/* === FORMULÁRIOS === */
+.tabulation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  color: var(--gray);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.checkbox-label {
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.velohub-input {
+  background: var(--white);
+  border: 1.5px solid var(--blue-dark);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: 'Poppins', sans-serif;
+  color: var(--gray);
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.velohub-input:focus {
+  outline: none;
+  border-color: var(--blue-medium);
+  box-shadow: 0 0 0 3px rgba(22, 52, 255, 0.1);
+}
+
+.velohub-input[type="textarea"],
+textarea.velohub-input {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* === BOTÕES === */
+.velohub-btn {
+  background: var(--blue-medium);
+  color: var(--white);
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+}
+
+.velohub-btn:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(22, 52, 255, 0.3);
+}
+
+.velohub-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.velohub-btn.secondary {
+  background: var(--blue-opaque);
+}
+
+.velohub-btn.secondary:hover {
+  background: var(--blue-medium);
+}
+
+/* === MÉTRICAS === */
+.metrics-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.metric-card {
+  background: var(--cor-card);
+  border-radius: 12px;
+  padding: 20px;
+  border-left: 5px solid var(--blue-medium);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.metric-card h3 {
+  color: var(--gray);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+}
+
+.metric-value {
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+/* === FILTROS === */
+.filters-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: var(--cor-fundo);
+  border-radius: 8px;
+}
+
+.filter-group label {
+  color: var(--gray);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* === FEED === */
+.feed-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feed-card {
+  border-left: 5px solid var(--blue-medium);
+}
+
+.feed-card.card-instagram {
+  border-left-color: #E1306C;
+}
+
+.feed-card.card-facebook {
+  border-left-color: #4267B2;
+}
+
+.feed-card.card-tiktok {
+  border-left-color: #00f2ea;
+}
+
+.feed-card.card-youtube {
+  border-left-color: #FF0000;
+}
+
+.feed-card.card-messenger {
+  border-left-color: #006AFF;
+}
+
+.feed-card.card-playstore {
+  border-left-color: #34A853;
+}
+
+.feed-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feed-header strong {
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
+
+.feed-meta {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.badge {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  color: var(--gray);
+}
+
+.rating {
+  color: var(--yellow);
+  font-weight: 600;
+}
+
+.feed-message {
+  color: var(--gray);
+  font-style: italic;
+  margin: 10px 0;
+}
+
+.feed-link {
+  color: var(--blue-medium);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.feed-link:hover {
+  text-decoration: underline;
+}
+
+.feed-timestamp {
+  color: var(--gray);
+  opacity: 0.7;
+  font-size: 0.8rem;
+}
+
+.sentiment-positivo {
+  color: var(--green);
+  font-weight: bold;
+}
+
+.sentiment-negativo {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.sentiment-neutro {
+  color: var(--yellow);
+  font-weight: bold;
+}
+
+/* === MENSAGENS === */
+.message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.message.success {
+  background-color: rgba(21, 162, 55, 0.1);
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+
+.message.error {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+/* === GRÁFICOS === */
+.charts-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.chart-container {
+  background: var(--cor-card);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container h3 {
+  color: var(--blue-dark);
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+/* === RELATÓRIOS === */
+.report-actions {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.report-content {
+  background: var(--cor-card);
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.markdown-content {
+  color: var(--gray);
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+  color: var(--blue-dark);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.markdown-content p {
+  margin-bottom: 10px;
+}
+
+.markdown-content li {
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+
+/* === TEMA ESCURO === */
+.dark body {
+  background-color: var(--cor-fundo-escuro);
+  color: var(--texto-principal-escuro);
+}
+
+.dark .velohub-header {
+  background-color: var(--cor-header-escuro);
+  border-bottom: 1px solid var(--divisoria-escura);
+  box-shadow: 0 4px 20px var(--sombra-header-escura);
+}
+
+.dark .velohub-container,
+.dark .velohub-card {
+  background-color: var(--cor-container-escuro);
+  box-shadow: 0 4px 20px var(--sombra-escura);
+}
+
+.dark .velohub-input {
+  background: var(--cor-container-escuro);
+  color: var(--texto-principal-escuro);
+  border: 1px solid var(--borda-escura);
+}
+
+.dark h1,
+.dark h2,
+.dark h3 {
+  color: var(--texto-principal-escuro);
+}
+
+.dark p,
+.dark span,
+.dark div {
+  color: var(--texto-secundario-escuro);
+}
+
+/* === RESPONSIVIDADE === */
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .charts-section {
+    grid-template-columns: 1fr;
+  }
+
+  .velohub-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .nav-menu {
+    flex-wrap: wrap;
+  }
+}
