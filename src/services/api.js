@@ -15,17 +15,29 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Melhorar log de erros
+    // Melhorar log de erros com mais detalhes
     const errorMessage = error.response?.data?.error || error.message || 'Erro desconhecido'
     const errorStatus = error.response?.status
     const errorUrl = error.config?.url
+    const requestData = error.config?.data
     
-    console.error('Erro na API:', {
+    console.error('❌ Erro na API:', {
       url: errorUrl,
       status: errorStatus,
       message: errorMessage,
-      data: error.response?.data
+      responseData: error.response?.data,
+      requestData: requestData ? JSON.parse(requestData) : null,
+      fullError: error
     })
+    
+    // Log mais detalhado para erros 400
+    if (errorStatus === 400) {
+      console.error('📋 Detalhes do erro 400:', {
+        mensagem: error.response?.data?.error,
+        dadosEnviados: requestData ? JSON.parse(requestData) : null,
+        headers: error.config?.headers
+      })
+    }
     
     return Promise.reject(error)
   }
@@ -34,9 +46,26 @@ api.interceptors.response.use(
 // Criar nova tabulação
 export const createTabulation = async (data) => {
   try {
+    console.log('🔄 Criando tabulação com dados:', data)
     const response = await api.post('/tabulation', data)
+    console.log('✅ Tabulação criada com sucesso:', response.data)
     return response.data
   } catch (error) {
+    console.error('❌ Erro ao criar tabulação:', {
+      status: error.response?.status,
+      error: error.response?.data,
+      message: error.message
+    })
+    
+    // Retornar objeto com success: false para manter compatibilidade
+    if (error.response?.status === 400) {
+      const errorMessage = error.response?.data?.error || 'Dados inválidos. Verifique os campos obrigatórios.'
+      console.error('📋 Erro 400 detalhado:', errorMessage)
+      return {
+        success: false,
+        error: errorMessage
+      }
+    }
     throw new Error(error.response?.data?.error || 'Erro ao criar tabulação')
   }
 }

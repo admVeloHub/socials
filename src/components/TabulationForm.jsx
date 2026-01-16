@@ -74,14 +74,44 @@ const TabulationForm = () => {
     setMessage('')
 
     try {
-      const data = {
-        ...formData,
-        rating: formData.socialNetwork === 'PlayStore' && formData.rating 
-          ? parseInt(formData.rating.replace('⭐', '').trim()) 
-          : null
+      // Limpar dados: converter strings vazias para null e processar rating
+      let ratingValue = null;
+      if (formData.rating && formData.rating !== '') {
+        const ratingStr = formData.rating.replace('⭐', '').trim();
+        if (ratingStr) {
+          const parsed = parseInt(ratingStr, 10);
+          if (!isNaN(parsed) && parsed >= 1 && parsed <= 5) {
+            ratingValue = parsed;
+          }
+        }
       }
 
+      // Preparar dados garantindo que não há undefined ou strings vazias indevidas
+      const data = {
+        clientName: (formData.clientName || '').trim(),
+        socialNetwork: formData.socialNetwork || '',
+        messageText: (formData.messageText || '').trim(),
+        rating: ratingValue,
+        contactReason: (formData.contactReason && formData.contactReason.trim() !== '') ? formData.contactReason.trim() : null,
+        sentiment: (formData.sentiment && formData.sentiment.trim() !== '') ? formData.sentiment.trim() : null,
+        directedCenter: Boolean(formData.directedCenter),
+        link: (formData.link && formData.link.trim() !== '') ? formData.link.trim() : null
+      }
+
+      // Validar campos obrigatórios antes de enviar
+      if (!data.clientName || !data.socialNetwork || !data.messageText) {
+        setMessage('Erro: Preencha todos os campos obrigatórios (Nome do Cliente, Rede Social e Mensagem)')
+        setLoading(false)
+        return
+      }
+
+      // Log dos dados antes de enviar (para debug)
+      console.log('📤 Enviando dados para API:', data)
+
       const result = await createTabulation(data)
+      
+      // Log do resultado
+      console.log('📥 Resposta da API:', result)
       
       if (result.success) {
         setMessage('Tabulação criada com sucesso!')
@@ -97,10 +127,12 @@ const TabulationForm = () => {
           link: ''
         })
       } else {
-        setMessage(`Erro: ${result.error}`)
+        setMessage(`Erro: ${result.error || 'Erro desconhecido ao criar tabulação'}`)
       }
     } catch (error) {
-      setMessage(`Erro ao criar tabulação: ${error.message}`)
+      const errorMessage = error.response?.data?.error || error.message || 'Erro desconhecido ao criar tabulação'
+      console.error('Erro detalhado:', error.response?.data || error)
+      setMessage(`Erro: ${errorMessage}`)
     } finally {
       setLoading(false)
     }
