@@ -1,11 +1,12 @@
 // VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API - Backend no Render (evita staging-skynet/Cloud Run que causa CORS)
+// URL base da API - Backend no Render (sempre usar URL absoluta em produção)
 const RENDER_BACKEND = 'https://velohub-backend.onrender.com/api/sociais'
 const envUrl = import.meta.env.VITE_API_URL
-// Se VITE_API_URL apontar para staging-skynet (Cloud Run), usar velohub-backend para evitar CORS
-const API_BASE_URL = (envUrl && !envUrl.includes('staging-skynet')) ? envUrl : RENDER_BACKEND
+// Usar VITE_API_URL apenas se for URL absoluta (http) e não staging-skynet
+// Evita URL relativa (/api/sociais) que causa 404 ao chamar o frontend em vez do backend
+const API_BASE_URL = (envUrl && envUrl.startsWith('http') && !envUrl.includes('staging-skynet')) ? envUrl : RENDER_BACKEND
 
 const api = axios.create({
   baseURL: API_BASE_URL,
