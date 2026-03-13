@@ -51,6 +51,22 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* === TIPOGRAFIA OFICIAL VELOHUB === */
+/* Fonte Anton para títulos principais */
+.anton-font,
+h1.anton-title,
+.velohub-title {
+  font-family: 'Anton', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Fonte Poppins para textos e subtítulos */
+.poppins-font {
+  font-family: 'Poppins', sans-serif;
+}
+
 /* === APP CONTAINER === */
 .app {
   min-height: 100vh;

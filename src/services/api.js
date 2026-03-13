@@ -1,7 +1,7 @@
 // VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API - Natralha
+// URL base da API - Tabulações (tabulacoes.onrender.com)
 // 1) VITE_API_URL (Render env): URL completa do backend - use quando frontend for Static Site
 // 2) /api/sociais: proxy no server.js - use quando frontend for Web Service com BACKEND_API_URL
 // Nunca usar staging-skynet/Cloud Run (CORS)

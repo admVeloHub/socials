@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { AddCircleOutlined } from '@mui/icons-material'
 import { createTabulation, analyzeText } from '../services/api'
+import { todayBRTDateString } from '../utils/dateUtils'
 
 const TabulationForm = () => {
   const [formData, setFormData] = useState({
@@ -12,7 +13,8 @@ const TabulationForm = () => {
     contactReason: '',
     sentiment: '',
     directedCenter: false,
-    link: ''
+    link: '',
+    createdAt: todayBRTDateString() // Data de hoje em Brasília (evita erro antes das 9h UTC)
   })
   
   const [useAI, setUseAI] = useState(false)
@@ -20,7 +22,7 @@ const TabulationForm = () => {
   const [message, setMessage] = useState('')
 
   const socialNetworks = ['Instagram', 'Facebook', 'TikTok', 'Messenger', 'YouTube', 'PlayStore']
-  const reasons = ['Comercial', 'Suporte', 'Bug', 'Elogio']
+  const reasons = ['Produto', 'Suporte', 'Bug', 'Elogio', 'Reclamação', 'Oculto', 'Outro']
   const sentiments = ['Positivo', 'Neutro', 'Negativo']
 
   const handleChange = (e) => {
@@ -95,7 +97,8 @@ const TabulationForm = () => {
         contactReason: (formData.contactReason && formData.contactReason.trim() !== '') ? formData.contactReason.trim() : null,
         sentiment: (formData.sentiment && formData.sentiment.trim() !== '') ? formData.sentiment.trim() : null,
         directedCenter: Boolean(formData.directedCenter),
-        link: (formData.link && formData.link.trim() !== '') ? formData.link.trim() : null
+        link: (formData.link && formData.link.trim() !== '') ? formData.link.trim() : null,
+        createdAt: formData.createdAt && formData.createdAt.trim() !== '' ? formData.createdAt : null
       }
 
       // Validar campos obrigatórios antes de enviar
@@ -124,7 +127,8 @@ const TabulationForm = () => {
           contactReason: '',
           sentiment: '',
           directedCenter: false,
-          link: ''
+          link: '',
+          createdAt: todayBRTDateString()
         })
       } else {
         setMessage(`Erro: ${result.error || 'Erro desconhecido ao criar tabulação'}`)
@@ -141,7 +145,7 @@ const TabulationForm = () => {
   return (
     <div className="velohub-container">
       <h2 className="section-title">
-        <AddCircleOutlined className="section-icon" />
+        <AddCircleOutlined className="section-icon" sx={{ fontSize: 'inherit' }} />
         Nova Tabulação
       </h2>
       
@@ -184,6 +188,22 @@ const TabulationForm = () => {
         </div>
 
         <div className="form-group">
+          <label htmlFor="createdAt">Data da Tabulação (Opcional)</label>
+          <input
+            type="date"
+            id="createdAt"
+            name="createdAt"
+            value={formData.createdAt}
+            onChange={handleChange}
+            className="velohub-input"
+            title="Deixe em branco para usar a data atual"
+          />
+          <small style={{ color: '#888', fontSize: '12px', display: 'block', marginTop: '4px' }}>
+            Deixe em branco para usar a data/hora atual
+          </small>
+        </div>
+
+        <div className="form-group">
           <label htmlFor="messageText">Texto da Mensagem Principal *</label>
           <textarea
             id="messageText"
@@ -196,7 +216,7 @@ const TabulationForm = () => {
           />
         </div>
 
-        {formData.socialNetwork === 'YouTube' && (
+        {(formData.socialNetwork === 'YouTube' || formData.socialNetwork === 'TikTok') && (
           <div className="form-group">
             <label htmlFor="link">Link do Vídeo</label>
             <input
@@ -206,6 +226,7 @@ const TabulationForm = () => {
               value={formData.link}
               onChange={handleChange}
               className="velohub-input"
+              placeholder="Ex: https://www.youtube.com/watch?v=... ou https://www.tiktok.com/@... ou https://drive.google.com/..."
             />
           </div>
         )}

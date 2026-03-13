@@ -8,6 +8,8 @@ import './styles/theme.css'
 
 function App() {
   const [activeTab, setActiveTab] = useState('tabulation')
+  const [selectedWord, setSelectedWord] = useState(null)
+  const [wordCloudWords, setWordCloudWords] = useState([])
 
   const tabs = [
     { id: 'tabulation', label: 'Entrada de Dados' },
@@ -15,6 +17,11 @@ function App() {
     { id: 'feed', label: 'Feed de Atendimento' },
     { id: 'reports', label: 'Relatórios' }
   ]
+
+  const handleWordSelect = (word) => {
+    setSelectedWord(word)
+    setActiveTab('feed')
+  }
 
   return (
     <div className="app">
@@ -36,8 +43,8 @@ function App() {
 
       <main className="main-content">
         {activeTab === 'tabulation' && <TabulationForm />}
-        {activeTab === 'dashboard' && <Dashboard />}
-        {activeTab === 'feed' && <Feed />}
+        {activeTab === 'dashboard' && <Dashboard onWordClick={handleWordSelect} setWordCloudWords={setWordCloudWords} />}
+        {activeTab === 'feed' && <Feed selectedWord={selectedWord} wordCloudWords={wordCloudWords} />}
         {activeTab === 'reports' && <Reports />}
       </main>
     </div>

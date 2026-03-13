@@ -95,7 +95,7 @@ with tabs[0]:
             if social_network == "PlayStore":
                 rating = st.select_slider("Avaliação", options=["1⭐", "2⭐", "3⭐", "4⭐", "5⭐"])
             
-            reason = st.selectbox("Motivo do Contato", ["Comercial", "Suporte", "Bug", "Elogio"])
+            reason = st.selectbox("Motivo do Contato", ["Produto", "Suporte", "Bug", "Elogio", "Reclamação", "Oculto", "Outro"])
             sentiment = st.selectbox("Sentimento", ["Positivo", "Neutro", "Negativo"])
             dest_center = st.text_input("Central de Destino")
 

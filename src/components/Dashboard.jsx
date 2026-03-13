@@ -1,12 +1,31 @@
-// VERSION: v1.1.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
-import { useState, useEffect } from 'react'
-import Plot from 'react-plotly.js'
-import { getDashboardMetrics, getChartData, getRatingAverage } from '../services/api'
+// VERSION: v1.2.0 | DATE: 2025-01-30 | AUTHOR: VeloHub Development Team
+import { useState, useEffect, useCallback } from 'react'
+import Plotly from 'plotly.js-dist-min'
+import { getDashboardMetrics, getChartData, getRatingAverage, getTabulations } from '../services/api'
+import WordCloudInsights from './WordCloudInsights'
 
-const Dashboard = () => {
+// Importar createPlotlyComponent usando import default
+// O módulo react-plotly.js/factory exporta apenas default
+import createPlotlyComponentDefault from 'react-plotly.js/factory'
+
+// Extrair a função corretamente - pode ser default ou o próprio módulo
+const createPlotlyComponent = createPlotlyComponentDefault?.default || createPlotlyComponentDefault
+
+// Verificar se é uma função antes de usar
+if (typeof createPlotlyComponent !== 'function') {
+  console.error('createPlotlyComponent não é uma função:', createPlotlyComponent)
+}
+
+// Criar componente Plot usando a factory do react-plotly.js
+const Plot = createPlotlyComponent && typeof createPlotlyComponent === 'function' 
+  ? createPlotlyComponent(Plotly) 
+  : null
+
+const Dashboard = ({ onWordClick, setWordCloudWords }) => {
   const [metrics, setMetrics] = useState(null)
   const [chartData, setChartData] = useState(null)
   const [ratingAverage, setRatingAverage] = useState(null)
+  const [messages, setMessages] = useState([])
   const [filters, setFilters] = useState({
     socialNetwork: '',
     contactReason: '',
@@ -16,7 +35,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true)
 
   const socialNetworks = ['Instagram', 'Facebook', 'TikTok', 'Messenger', 'YouTube', 'PlayStore']
-  const reasons = ['Comercial', 'Suporte', 'Bug', 'Elogio']
+  const reasons = ['Produto', 'Suporte', 'Bug', 'Elogio', 'Reclamação', 'Oculto', 'Outro']
 
   useEffect(() => {
     loadData()
@@ -25,10 +44,11 @@ const Dashboard = () => {
   const loadData = async () => {
     setLoading(true)
     try {
-      const [metricsResult, chartResult, ratingResult] = await Promise.allSettled([
+      const [metricsResult, chartResult, ratingResult, messagesResult] = await Promise.allSettled([
         getDashboardMetrics(filters),
         getChartData(filters),
-        getRatingAverage(filters)
+        getRatingAverage(filters),
+        getTabulations(filters)
       ])
 
       // Tratar métricas - tentar usar dados mesmo se success for false
@@ -65,6 +85,21 @@ const Dashboard = () => {
       } else if (ratingResult.status === 'rejected') {
         console.warn('Endpoint de rating não disponível:', ratingResult.reason?.message)
       }
+
+      // Tratar mensagens para WordCloud
+      if (messagesResult.status === 'fulfilled') {
+        if (messagesResult.value?.data && Array.isArray(messagesResult.value.data)) {
+          setMessages(messagesResult.value.data)
+        } else if (messagesResult.value?.success === false) {
+          console.warn('Erro ao carregar mensagens para WordCloud:', messagesResult.value?.error)
+          setMessages([])
+        } else {
+          setMessages([])
+        }
+      } else if (messagesResult.status === 'rejected') {
+        console.warn('Erro ao carregar mensagens para WordCloud:', messagesResult.reason?.message)
+        setMessages([])
+      }
     } catch (error) {
       console.error('Erro ao carregar dados:', error)
     } finally {
@@ -78,6 +113,12 @@ const Dashboard = () => {
       [name]: value
     }))
   }
+
+  const handleWordsProcessed = useCallback((words) => {
+    if (setWordCloudWords) {
+      setWordCloudWords(words)
+    }
+  }, [setWordCloudWords])
 
   if (loading) {
     return (
@@ -180,7 +221,7 @@ const Dashboard = () => {
       )}
 
       {/* Gráficos */}
-      {chartData && (
+      {chartData && Plot && (
         <div className="charts-section">
           <div className="chart-container">
             <h3>Volume por Rede Social</h3>
@@ -221,6 +262,19 @@ const Dashboard = () => {
           </div>
         </div>
       )}
+      {chartData && !Plot && (
+        <div className="charts-section">
+          <p>Carregando gráficos...</p>
+        </div>
+      )}
+
+      {/* Nuvem de Palavras */}
+      <WordCloudInsights 
+        messages={messages} 
+        filters={filters} 
+        onWordClick={onWordClick}
+        onWordsProcessed={handleWordsProcessed}
+      />
       </div>
     </>
   )
