@@ -1,8 +1,8 @@
 // VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API SKYNET - Backend Online
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://staging-skynet-278491073220.us-east1.run.app/api/sociais'
+// URL base da API - Backend no Render (VITE_API_URL define em prod; fallback para velohub-backend)
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://velohub-backend.onrender.com/api/sociais'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -21,19 +21,35 @@ api.interceptors.response.use(
     const errorUrl = error.config?.url
     const requestData = error.config?.data
     
+    // Log completo do body da resposta de erro
     console.error('❌ Erro na API:', {
       url: errorUrl,
       status: errorStatus,
       message: errorMessage,
       responseData: error.response?.data,
+      responseBody: error.response?.data, // Body completo da resposta
+      responseHeaders: error.response?.headers,
       requestData: requestData ? JSON.parse(requestData) : null,
+      requestHeaders: error.config?.headers,
       fullError: error
     })
     
-    // Log mais detalhado para erros 400
-    if (errorStatus === 400) {
-      console.error('📋 Detalhes do erro 400:', {
+    // Log detalhado do body da resposta de erro
+    console.error('📋 BODY DA RESPOSTA DE ERRO:', {
+      status: errorStatus,
+      statusText: error.response?.statusText,
+      data: error.response?.data,
+      dataStringified: JSON.stringify(error.response?.data, null, 2),
+      headers: error.response?.headers
+    })
+    
+    // Log mais detalhado para erros 400 e 500
+    if (errorStatus === 400 || errorStatus === 500) {
+      console.error(`📋 Detalhes do erro ${errorStatus}:`, {
         mensagem: error.response?.data?.error,
+        success: error.response?.data?.success,
+        details: error.response?.data?.details,
+        bodyCompleto: error.response?.data,
         dadosEnviados: requestData ? JSON.parse(requestData) : null,
         headers: error.config?.headers
       })
@@ -95,9 +111,26 @@ export const getTabulations = async (filters = {}) => {
       params.append('dateTo', filters.dateTo)
     }
     
+    const fullUrl = `${API_BASE_URL}/tabulations?${params.toString()}`
+    console.log('🌐 [API] Chamando:', fullUrl)
+    console.log('🌐 [API] Filtros enviados:', filters)
+    
     const response = await api.get('/tabulations', { params })
+    
+    console.log('✅ [API] Resposta recebida:', {
+      status: response.status,
+      count: response.data?.count,
+      hasData: !!response.data?.data
+    })
+    
     return response.data
   } catch (error) {
+    console.error('❌ [API] Erro ao listar tabulações:', {
+      status: error.response?.status,
+      message: error.message,
+      responseData: error.response?.data,
+      url: error.config?.url
+    })
     throw new Error(error.response?.data?.error || 'Erro ao listar tabulações')
   }
 }
@@ -105,6 +138,8 @@ export const getTabulations = async (filters = {}) => {
 // Obter métricas do dashboard
 export const getDashboardMetrics = async (filters = {}) => {
   try {
+    console.log('📊 [API] getDashboardMetrics - Filtros recebidos:', filters)
+    
     const params = new URLSearchParams()
     
     if (filters.socialNetwork && filters.socialNetwork !== '') {
@@ -123,9 +158,28 @@ export const getDashboardMetrics = async (filters = {}) => {
       params.append('dateTo', filters.dateTo)
     }
     
+    const fullUrl = `${API_BASE_URL}/dashboard/metrics?${params.toString()}`
+    console.log('🌐 [API] getDashboardMetrics - URL completa:', fullUrl)
+    console.log('🌐 [API] getDashboardMetrics - Parâmetros construídos:', Object.fromEntries(params))
+    
     const response = await api.get('/dashboard/metrics', { params })
+    
+    console.log('✅ [API] getDashboardMetrics - Resposta recebida:', {
+      status: response.status,
+      success: response.data?.success,
+      hasData: !!response.data?.data,
+      dataKeys: response.data?.data ? Object.keys(response.data.data) : []
+    })
+    
     return response.data
   } catch (error) {
+    console.error('❌ [API] getDashboardMetrics - Erro:', {
+      status: error.response?.status,
+      message: error.message,
+      responseData: error.response?.data,
+      url: error.config?.url
+    })
+    
     // Tratar erro 500 especificamente
     if (error.response?.status === 500) {
       console.error('Erro 500 no servidor ao buscar métricas:', error.response?.data)
@@ -148,6 +202,8 @@ export const getDashboardMetrics = async (filters = {}) => {
 // Obter dados para gráficos
 export const getChartData = async (filters = {}) => {
   try {
+    console.log('📊 [API] getChartData - Filtros recebidos:', filters)
+    
     const params = new URLSearchParams()
     
     if (filters.socialNetwork && filters.socialNetwork !== '') {
@@ -166,9 +222,28 @@ export const getChartData = async (filters = {}) => {
       params.append('dateTo', filters.dateTo)
     }
     
+    const fullUrl = `${API_BASE_URL}/dashboard/charts?${params.toString()}`
+    console.log('🌐 [API] getChartData - URL completa:', fullUrl)
+    console.log('🌐 [API] getChartData - Parâmetros construídos:', Object.fromEntries(params))
+    
     const response = await api.get('/dashboard/charts', { params })
+    
+    console.log('✅ [API] getChartData - Resposta recebida:', {
+      status: response.status,
+      success: response.data?.success,
+      hasData: !!response.data?.data,
+      dataKeys: response.data?.data ? Object.keys(response.data.data) : []
+    })
+    
     return response.data
   } catch (error) {
+    console.error('❌ [API] getChartData - Erro:', {
+      status: error.response?.status,
+      message: error.message,
+      responseData: error.response?.data,
+      url: error.config?.url
+    })
+    
     // Tratar erro 500 especificamente
     if (error.response?.status === 500) {
       console.error('Erro 500 no servidor ao buscar dados de gráficos:', error.response?.data)
@@ -191,6 +266,8 @@ export const getChartData = async (filters = {}) => {
 // Obter feed de atendimentos
 export const getFeed = async (filters = {}) => {
   try {
+    console.log('📊 [API] getFeed - Filtros recebidos:', filters)
+    
     const params = new URLSearchParams()
     
     if (filters.socialNetwork && filters.socialNetwork !== '') {
@@ -213,9 +290,28 @@ export const getFeed = async (filters = {}) => {
       params.append('dateTo', filters.dateTo)
     }
     
+    const fullUrl = `${API_BASE_URL}/feed?${params.toString()}`
+    console.log('🌐 [API] getFeed - URL completa:', fullUrl)
+    console.log('🌐 [API] getFeed - Parâmetros construídos:', Object.fromEntries(params))
+    
     const response = await api.get('/feed', { params })
+    
+    console.log('✅ [API] getFeed - Resposta recebida:', {
+      status: response.status,
+      success: response.data?.success,
+      count: response.data?.count,
+      hasData: !!response.data?.data,
+      dataLength: response.data?.data?.length
+    })
+    
     return response.data
   } catch (error) {
+    console.error('❌ [API] getFeed - Erro:', {
+      status: error.response?.status,
+      message: error.message,
+      responseData: error.response?.data,
+      url: error.config?.url
+    })
     throw new Error(error.response?.data?.error || 'Erro ao obter feed')
   }
 }
@@ -274,6 +370,8 @@ export const deleteTabulation = async (id) => {
 // Obter média de rating
 export const getRatingAverage = async (filters = {}) => {
   try {
+    console.log('📊 [API] getRatingAverage - Filtros recebidos:', filters)
+    
     const params = new URLSearchParams()
     
     if (filters.socialNetwork && filters.socialNetwork !== '') {
@@ -288,12 +386,31 @@ export const getRatingAverage = async (filters = {}) => {
       params.append('dateTo', filters.dateTo)
     }
     
+    const fullUrl = `${API_BASE_URL}/rating/average?${params.toString()}`
+    console.log('🌐 [API] getRatingAverage - URL completa:', fullUrl)
+    console.log('🌐 [API] getRatingAverage - Parâmetros construídos:', Object.fromEntries(params))
+    
     const response = await api.get('/rating/average', { params })
+    
+    console.log('✅ [API] getRatingAverage - Resposta recebida:', {
+      status: response.status,
+      success: response.data?.success,
+      average: response.data?.data?.average,
+      count: response.data?.data?.count
+    })
+    
     return response.data
   } catch (error) {
+    console.error('❌ [API] getRatingAverage - Erro:', {
+      status: error.response?.status,
+      message: error.message,
+      responseData: error.response?.data,
+      url: error.config?.url
+    })
+    
     // Se o endpoint não existir (404), retorna null para não quebrar o Dashboard
     if (error.response?.status === 404) {
-      console.warn('Endpoint /rating/average não encontrado. Retornando null.')
+      console.warn('⚠️ [API] getRatingAverage - Endpoint /rating/average não encontrado. Retornando null.')
       return { success: false, data: null }
     }
     throw new Error(error.response?.data?.error || 'Erro ao obter média de rating')
