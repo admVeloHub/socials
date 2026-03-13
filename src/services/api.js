@@ -1,13 +1,13 @@
 // VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API - relativa: o servidor do front (server.js) faz proxy para o backend
-// A URL do backend fica SOMENTE em BACKEND_API_URL (variável de ambiente no servidor)
-// Em dev local: VITE_API_URL pode ser http://localhost:3001/api/sociais
-// IMPORTANTE: Se VITE_API_URL apontar para staging-skynet/Cloud Run, forçar proxy (evita CORS)
+// URL base da API - Natralha
+// 1) VITE_API_URL (Render env): URL completa do backend - use quando frontend for Static Site
+// 2) /api/sociais: proxy no server.js - use quando frontend for Web Service com BACKEND_API_URL
+// Nunca usar staging-skynet/Cloud Run (CORS)
 const envUrl = import.meta.env.VITE_API_URL
-const forceProxy = !envUrl || envUrl.includes('staging-skynet') || envUrl.includes('run.app')
-const API_BASE_URL = forceProxy ? '/api/sociais' : envUrl
+const isInvalidUrl = !envUrl || envUrl.includes('staging-skynet') || envUrl.includes('run.app')
+const API_BASE_URL = (envUrl && envUrl.startsWith('http') && !isInvalidUrl) ? envUrl : '/api/sociais'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
