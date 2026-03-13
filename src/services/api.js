@@ -1,12 +1,10 @@
 // VERSION: v1.0.3 | DATE: 2026-01-14 | AUTHOR: VeloHub Development Team
 import axios from 'axios'
 
-// URL base da API - Backend no Render (sempre usar URL absoluta em produção)
-const RENDER_BACKEND = 'https://velohub-backend.onrender.com/api/sociais'
-const envUrl = import.meta.env.VITE_API_URL
-// Usar VITE_API_URL apenas se for URL absoluta (http) e não staging-skynet
-// Evita URL relativa (/api/sociais) que causa 404 ao chamar o frontend em vez do backend
-const API_BASE_URL = (envUrl && envUrl.startsWith('http') && !envUrl.includes('staging-skynet')) ? envUrl : RENDER_BACKEND
+// URL base da API - relativa: o servidor do front (server.js) faz proxy para o backend
+// A URL do backend fica SOMENTE em BACKEND_API_URL (variável de ambiente no servidor)
+// Em dev local: VITE_API_URL pode ser http://localhost:3001/api/sociais
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api/sociais'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
