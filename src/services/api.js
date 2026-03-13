@@ -2,12 +2,10 @@
 import axios from 'axios'
 
 // URL base da API - Tabulações (tabulacoes.onrender.com)
-// 1) VITE_API_URL (Render env): URL completa do backend - use quando frontend for Static Site
-// 2) /api/sociais: proxy no server.js - use quando frontend for Web Service com BACKEND_API_URL
-// Nunca usar staging-skynet/Cloud Run (CORS)
+// VITE_API_URL (Render env) ou fallback para staging-skynet
+const STAGING_SKYNET_API = 'https://staging-skynet-278491073220.us-east1.run.app/api/sociais'
 const envUrl = import.meta.env.VITE_API_URL
-const isInvalidUrl = !envUrl || envUrl.includes('staging-skynet') || envUrl.includes('run.app')
-const API_BASE_URL = (envUrl && envUrl.startsWith('http') && !isInvalidUrl) ? envUrl : '/api/sociais'
+const API_BASE_URL = (envUrl && envUrl.startsWith('http')) ? envUrl : STAGING_SKYNET_API
 
 const api = axios.create({
   baseURL: API_BASE_URL,
